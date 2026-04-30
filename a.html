@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استطلاع رأي ذكي</title>
+    <style>
+        /* إعدادات الألوان والحركة */
+        :root {
+            --primary-color: #ffffff;
+            --accent-color: #00d2ff;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* خلفية ملونة متحركة جذابة */
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+            padding: 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* حاوية النموذج (تأثير الزجاج) */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            width: 100%;
+            max-width: 550px;
+            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+            color: var(--text-color);
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin: 0;
+            font-weight: 800;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        /* تحسين حقول النص */
+        input[type="text"] {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 15px 20px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input[type="text"]:focus {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 15px rgba(255,255,255,0.1);
+        }
+
+        /* تحسين الخيارات اللاسلكية (الراديو) */
+        .options-wrapper {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-item {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            padding: 15px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .option-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .option-item input[type="radio"] {
+            margin-left: 15px;
+            width: 20px;
+            height: 20px;
+            accent-color: #fff;
+        }
+
+        /* زر الإرسال الاحترافي */
+        .submit-btn {
+            width: 100%;
+            background: #fff;
+            color: #e73c7e;
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .submit-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
+            color: #23a6d5;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 11px;
+            margin-top: 25px;
+            opacity: 0.7;
+        }
+
+        /* تحسين العرض على الشاشات الصغيرة */
+        @media (max-width: 480px) {
+            .glass-container { padding: 25px; }
+            .header h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="glass-container">
+    <div class="header">
+        <h1>استطلاع الرأي</h1>
+        <p>شاركنا رؤيتك حول تقنيات الذكاء الاصطناعي</p>
+    </div>
+
+    <form action="https://docs.google.com/forms/d/e/1FAIpQLSdBpLHiDgWmDIS4jJ5HcbF0NUmcRXDZ0aAGUZQOKcV7s_Aqrg/formResponse" method="POST">
+        
+        <!-- حقل الاسم -->
+        <div class="input-group">
+            <label>الاسم الكامل</label>
+            <input type="text" name="entry.1129176079" placeholder="كيف نناديك؟" required>
+        </div>
+
+        <!-- خيارات الأدوات -->
+        <div class="input-group">
+            <label>الأداة المفضلة لديك</label>
+            <div class="options-wrapper">
+                <label class="option-item">
+                    <input type="radio" name="entry.884929383" value="شات جي بي تي" required>
+                    <span>شات جي بي تي (ChatGPT)</span>
+                </label>
+                <label class="option-item">
+                    <input type="radio" name="entry.884929383" value="جمناي">
+                    <span>جمناي (Gemini)</span>
+                </label>
+                <label class="option-item">
+                    <input type="radio" name="entry.884929383" value="ديب سيك">
+                    <span>ديب سيك (DeepSeek)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- حقل السبب -->
+        <div class="input-group">
+            <label>سبب تفضيلك لهذه الأداة</label>
+            <input type="text" name="entry.719588312" placeholder="ما الذي يميزها برأيك؟" required>
+        </div>
+
+        <button type="submit" class="submit-btn">إرسال المشاركة</button>
+    </form>
+
+    <div class="footer-note">
+        جميع الردود ترسل بشكل آمن ومشفر
+    </div>
+</div>
+
+</body>
+</html>
