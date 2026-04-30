@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام نور - درجات الطالب</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* رأس الصفحة */
+        .header {
+            background: linear-gradient(to left, #019D8F 0%, #01a89a 100%);
+            color: white;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(1, 157, 143, 0.3);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .logo img {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            object-fit: contain;
+        }
+
+        .header-text h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .header-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* قسم معلومات الطالب */
+        .student-info {
+            background: #f9f9f9;
+            padding: 25px 30px;
+            border-bottom: 2px solid #019D8F;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .info-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-field label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .info-field input,
+        .info-field span {
+            font-size: 18px;
+            color: #333;
+            font-weight: bold;
+            padding: 10px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 12px;
+        }
+
+        .info-field input {
+            cursor: text;
+            transition: all 0.3s ease;
+        }
+
+        .info-field input:focus {
+            outline: none;
+            border-color: #019D8F;
+            box-shadow: 0 0 8px rgba(1, 157, 143, 0.2);
+            background: #f0fffe;
+        }
+
+        /* جدول الدرجات */
+        .table-section {
+            padding: 30px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            color: #019D8F;
+            margin-bottom: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #019D8F;
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        thead {
+            background: #019D8F;
+            color: white;
+        }
+
+        th {
+            padding: 16px;
+            text-align: right;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 15px;
+        }
+
+        tbody tr:hover {
+            background: #f5f5f5;
+            transition: background 0.2s ease;
+        }
+
+        td input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #019D8F;
+            transition: all 0.3s ease;
+        }
+
+        td input:focus {
+            outline: none;
+            border-color: #019D8F;
+            box-shadow: 0 0 8px rgba(1, 157, 143, 0.2);
+            background: #f0fffe;
+        }
+
+        /* قسم الرسالة */
+        .message-section {
+            background: #f9f9f9;
+            padding: 30px;
+            border-top: 2px solid #019D8F;
+        }
+
+        .message-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .message-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+            transition: all 0.3s ease;
+            color: #333;
+        }
+
+        .message-textarea:focus {
+            outline: none;
+            border-color: #019D8F;
+            box-shadow: 0 0 10px rgba(1, 157, 143, 0.2);
+            background: #f0fffe;
+        }
+
+        /* أزرار */
+        .buttons-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            padding: 30px;
+            background: #f9f9f9;
+            border-top: 2px solid #019D8F;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            font-size: 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-send {
+            background: #019D8F;
+            color: white;
+        }
+
+        .btn-send:hover {
+            background: #017a73;
+            box-shadow: 0 4px 12px rgba(1, 157, 143, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-send:active {
+            transform: translateY(0);
+        }
+
+        .btn-reset {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-reset:hover {
+            background: #d0d0d0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* رسالة النجاح */
+        .success-message {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: #c41e3a;
+            color: white;
+            padding: 18px 25px;
+            border-radius: 5px;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+            display: none;
+            z-index: 1000;
+            animation: blink 0.7s infinite;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @keyframes blink {
+            0%, 49% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0.4;
+            }
+        }
+
+        /* رسالة خطأ */
+        .error-message {
+            color: #c41e3a;
+            font-size: 12px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* تعديل حجم خانة اسم الطالب */
+        .large-field {
+            grid-column: span 1;
+        }
+
+        .large-field input {
+            font-size: 22px;
+            padding: 15px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-text h1 {
+                font-size: 24px;
+            }
+
+            .buttons-section {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- الرأس -->
+        <div class="header">
+            <div class="header-text">
+                <h1>نظام نور التعليمي</h1>
+                <p>درجات الطالب والسلوك</p>
+            </div>
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="C:\Users\ABH\OneDrive\الصور\images (1).png" alt="شعار وزارة التعليم">
+                </div>
+                <div>
+                    <p style="font-size: 16px; font-weight: bold;">وزارة التعليم</p>
+                    <p style="font-size: 12px; opacity: 0.8;">المملكة العربية السعودية</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- معلومات الطالب -->
+        <div class="student-info">
+            <div class="info-grid">
+                <div class="info-field large-field">
+                    <label for="studentName">اسم الطالب</label>
+                    <input type="text" id="studentName" placeholder="أدخل اسم الطالب">
+                </div>
+                <div class="info-field">
+                    <label for="studentId">رقم الطالب</label>
+                    <input type="text" id="studentId" placeholder="أدخل الرقم الجامعي">
+                </div>
+                <div class="info-field">
+                    <label for="className">الفصل الدراسي</label>
+                    <input type="text" id="className" placeholder="أدخل الفصل">
+                </div>
+            </div>
+        </div>
+
+        <!-- جدول الدرجات -->
+        <div class="table-section">
+            <div class="section-title">درجات المواد الدراسية</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>المادة</th>
+                        <th>الدرجة</th>
+                        <th>الملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>التربية الإسلامية</td>
+                        <td><input type="number" min="0" max="100" placeholder="0"></td>
+                        <td><input type="text" placeholder="أدخل ملاحظاتك"></td>
+                    </tr>
+                    <tr>
+                        <td>الدراسات الاجتماعية</td>
+                        <td><input type="number" min="0" max="100" placeholder="0"></td>
+                        <td><input type="text" placeholder="أدخل مل��حظاتك"></td>
+                    </tr>
+                    <tr>
+                        <td>التفكير الناقد</td>
+                        <td><input type="number" min="0" max="100" placeholder="0"></td>
+                        <td><input type="text" placeholder="أدخل ملاحظاتك"></td>
+                    </tr>
+                    <tr>
+                        <td>المهارات الرقمية</td>
+                        <td><input type="number" min="0" max="100" placeholder="0"></td>
+                        <td><input type="text" placeholder="أدخل ملاحظاتك"></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="section-title">السلوك الإيجابي والسيء</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>نوع السلوك</th>
+                        <th>الدرجة</th>
+                        <th>الملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>السلوك الإيجابي</td>
+                        <td><input type="number" min="0" max="100" placeholder="0"></td>
+                        <td><input type="text" placeholder="أدخل ملاحظاتك"></td>
+                    </tr>
+                    <tr>
+                        <td>السلوك السيء</td>
+                        <td><input type="number" min="0" max="100" placeholder="0"></td>
+                        <td><input type="text" placeholder="أدخل ملاحظاتك"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- قسم الرسالة -->
+        <div class="message-section">
+            <label class="message-label" for="parentMessage">رسالة إلى ولي الأمر</label>
+            <textarea id="parentMessage" class="message-textarea" placeholder="اكتب الرسالة التي ترغب في إرسالها إلى ولي الأمر..."></textarea>
+            <div class="error-message" id="errorMsg"></div>
+        </div>
+
+        <!-- الأزرار -->
+        <div class="buttons-section">
+            <button class="btn btn-send" onclick="sendMessage()">إرسال الرسالة</button>
+            <button class="btn btn-reset" onclick="resetForm()">تنظيف</button>
+        </div>
+    </div>
+
+    <!-- رسالة النجاح -->
+    <div class="success-message" id="successMsg">✓ تم إرسال الرسالة بنجاح إلى ولي الأمر</div>
+
+    <script>
+        function sendMessage() {
+            const message = document.getElementById('parentMessage').value.trim();
+            const studentName = document.getElementById('studentName').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
+
+            // التحقق من البيانات
+            if (!studentName) {
+                errorMsg.textContent = '⚠ الرجاء إدخال اسم الطالب';
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            if (!message) {
+                errorMsg.textContent = '⚠ الرجاء كتابة رسالة قبل الإرسال';
+                errorMsg.classList.add('show');
+                return;
+            }
+
+            // إخفاء رسالة الخطأ
+            errorMsg.classList.remove('show');
+
+            // عرض رسالة النجاح
+            successMsg.classList.add('show');
+
+            // حفظ البيانات في localStorage (اختياري)
+            const timestamp = new Date().toLocaleString('ar-SA');
+            const messageData = {
+                studentName: studentName,
+                message: message,
+                timestamp: timestamp
+            };
+            console.log('تم إرسال الرسالة:', messageData);
+
+            // إخفاء الرسالة بعد دقيقة (60 ثانية)
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 60000);
+
+            // تنظيف حقل الرسالة
+            document.getElementById('parentMessage').value = '';
+        }
+
+        function resetForm() {
+            // تنظيف جميع الحقول
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentId').value = '';
+            document.getElementById('className').value = '';
+            document.getElementById('parentMessage').value = '';
+
+            // تنظيف جميع حقول الدرجات
+            const inputs = document.querySelectorAll('td input[type="number"]');
+            inputs.forEach(input => input.value = '');
+
+            // تنظيف حقول الملاحظات
+            const textInputs = document.querySelectorAll('td input[type="text"]');
+            textInputs.forEach(input => input.value = '');
+
+            // إخفاء رسائل الخطأ والنجاح
+            document.getElementById('errorMsg').classList.remove('show');
+            document.getElementById('successMsg').classList.remove('show');
+        }
+
+        // السماح بالضغط على Enter لإرسال الرسالة
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
